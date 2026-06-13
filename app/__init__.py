@@ -1,9 +1,14 @@
 from flask import Flask
+from .config import Config
+from .extensions import db, bcrypt
 
 def create_app():
     app = Flask(__name__)
 
-    app.config.from_object('app.config.Config')
+    app.config.from_object(Config)
+
+    db.init_app(app)
+    bcrypt.init_app(app)
 
     from app.main.routes import main_bp
     from app.auth.routes import auth_bp
