@@ -7,13 +7,19 @@
 
 <nav>
     {% if session.get("user_id") %}
+
         <!-- ✅ LOGGED IN -->
         <a href="{{ url_for('main.dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('requests.create_request') }}">Create Request</a>
+        <a href="{{ url_for('requests.my_requests') }}">My Requests</a>
         <a href="{{ url_for('auth.logout') }}">Logout</a>
+
     {% else %}
+
         <!-- ❌ GUEST -->
         <a href="{{ url_for('auth.login') }}">Login</a>
         <a href="{{ url_for('auth.register') }}">Register</a>
+        
     {% endif %}
 </nav>
 

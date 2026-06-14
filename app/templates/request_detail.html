@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Request Detail{% endblock %}
+
+{% block content %}
+
+<h2>{{ request.title }}</h2>
+
+<p><b>Description:</b> {{ request.description }}</p>
+<p><b>Status:</b> {{ request.status }}</p>
+<p><b>Owner:</b> {{ request.owner.username }}</p>
+<p><b>Created:</b> {{ request.created_at }}</p>
+
+{% endblock %}

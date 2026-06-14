@@ -29,3 +29,14 @@ All changes will be documented here.
 - Created protected dashboard route
 - Added flash messages for authentication flow
 - Implemented navigation state based on login status
+
+## Phase 3 - Request Management System 
+
+### Completed
+- Added Request model
+- Implemented User-Request relationship
+- Added request creation functionality
+- Added My Requests page
+- Added Request Details page
+- Implemented ownership validation
+- Updated navigation for request management
