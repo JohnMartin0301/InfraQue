@@ -1,19 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Dashboard</title>
-</head>
-<body>   
-
 {% extends "base.html" %}
 
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}    
 
-<h1>Dashboard</h1>
+<h1>Welcome, {{ username }}!</h1>
 
-<p>Welcome, {{ username }}!</p>
+<hr>
+
+<h2>Request Statistics</h2>
+
+<p>Total Requests: {{ total_requests }}</p>
+<p>Pending Requests: {{ pending_requests }}</p>
+
+<hr>
+
+<h2>Quick Actions</h2>
+
+<p>
+    <a href="{{ url_for('requests.create_request') }}">
+        Create Request
+    </a>
+</p>
+
+<p>
+    <a href="{{ url_for('requests.my_requests') }}">
+        My Requests
+    </a>
+</p>
+
+<hr>
+
+<h2>Recent Requests</h2>
+
+{% if recent_requests %}
+
+    <ul>
+    {% for request in recent_requests %}
+        <li>
+            <a href="{{ url_for('requests.request_detail', request_id=request.id) }}">
+                {{ request.title }}
+            </a>
+
+            -
+            {{ request.status }}
+            -
+
+            {{ request.created_at.strftime("%Y-%m-%d %H:%M:%S") }}
+        </li>
+    {% endfor %}
+    </ul>
+
+{% else %}
+
+    <p>No requests submitted yet.</p>
+
+{% endif %}
+
 
 <p>
     <a href="{{ url_for('auth.logout') }}">
@@ -22,6 +65,3 @@
 </p>
 
 {% endblock %}
-
-</body>
-</html>
