@@ -7,7 +7,8 @@ requests_bp = Blueprint('requests', __name__)
 
 @requests_bp.route("/requests")
 def my_requests():
-    if "user_id" not in session:
+
+    if not session.get("user_id"):
         return redirect(url_for("auth.login"))
     
     user_requests = Request.query.filter_by(user_id=session["user_id"]).all()
@@ -16,7 +17,8 @@ def my_requests():
 
 @requests_bp.route("/requests/new", methods=["GET", "POST"])
 def create_request():
-    if "user_id" not in session:
+
+    if not session.get("user_id"):
         return redirect(url_for("auth.login"))
     
     form = RequestForm()
@@ -37,7 +39,8 @@ def create_request():
 
 @requests_bp.route("/requests/<int:request_id>")
 def request_detail(request_id):
-    if "user_id" not in session:
+
+    if not session.get("user_id"):
         return redirect(url_for("auth.login"))
     
     req = Request.query.get_or_404(request_id)

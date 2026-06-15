@@ -24,7 +24,7 @@ def register():
             
         hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
 
-        user = User(username=username, email=email, password_hash=hashed_password)
+        user = User(username=username, email=email, password_hash=hashed_password, role="User")
 
         db.session.add(user)
         db.session.commit()
@@ -48,6 +48,7 @@ def login():
         if user and bcrypt.check_password_hash(user.password_hash, password):
             session["user_id"] = user.id
             session["username"] = user.username
+            session["role"] = user.role
 
             flash ("Login successful", "success")
 

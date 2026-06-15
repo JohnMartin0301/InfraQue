@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Engineer Area{% endblock %}
+
+{% block content %}
+
+<h1>Engineer Area</h1>
+<p>Welcome, {{ session.get("username") }}. You are logged in as <strong>Engineer</strong>.</p>
+
+<hr>
+
+<h2>Engineer Actions</h2>
+
+<ul>
+    <li>View approved requests</li>
+    <li>Update request status to In Progress</li>
+    <li>Mark requests as Completed</li>
+</ul>
+
+<p><em>Full engineer functionality will be available in a future phase.</em></p>
+
+{% endblock %}

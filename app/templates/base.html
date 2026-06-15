@@ -15,13 +15,21 @@
 
         <a href="{{ url_for('requests.my_requests') }}">My Requests</a>
 
+        {% if session.get("role") == "Admin" %}
+            <a href="{{ url_for('admin.admin_home') }}">Admin</a>
+        {% endif %}
+
+        {% if session.get("role") == "Engineer" %}
+            <a href="{{ url_for('admin.engineer_home') }}">Engineer</a>
+        {% endif %}
+
         <a href="{{ url_for('auth.logout') }}">Logout</a>
 
     {% else %}
 
         <!-- ❌ GUEST -->
         <a href="{{ url_for('auth.login') }}">Login</a>
-        
+
         <a href="{{ url_for('auth.register') }}">Register</a>
 
     {% endif %}

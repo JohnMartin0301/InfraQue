@@ -10,7 +10,7 @@ def home():
 @main_bp.route("/dashboard")
 def dashboard():
 
-    if "user_id" not in session:
+    if not session.get("user_id"):
         flash("Access denied. Please login", "danger")
         
         return redirect(url_for("auth.login"))
@@ -22,5 +22,5 @@ def dashboard():
 
     recent_requests = (Request.query.filter_by(user_id=user_id).order_by(Request.created_at.desc()).limit(5).all())
 
-    return render_template("dashboard.html", username=session["username"], total_requests=total_requests, pending_requests=pending_requests, recent_requests=recent_requests) 
+    return render_template("dashboard.html", username=session["username"], role=session["role"], total_requests=total_requests, pending_requests=pending_requests, recent_requests=recent_requests) 
 

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Panel{% endblock %}
+
+{% block content %}
+
+<h1>Admin Panel</h1>
+<p>Welcome, {{ session.get("username") }}. You are logged in as <strong>Admin</strong>.</p>
+
+<hr>
+
+<h2>Admin Actions</h2>
+
+<ul>
+    <li>Manage users</li>
+    <li>Approve or reject requests</li>
+    <li>View all requests</li>
+</ul>
+
+<p><em>Full admin functionality will be available in a future phase.</em></p>
+
+{% endblock %}
