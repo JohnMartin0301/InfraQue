@@ -37,4 +37,24 @@
     <button type="submit">Update Status</button>
 </form>
 
+<hr>
+
+<h2>Status History</h2>
+
+{% if history %}
+    <ul>
+    {% for entry in history %}
+        <li>
+            <strong>{{ entry.old_status }}</strong>
+            →
+            <strong>{{ entry.new_status }}</strong>
+            — by {{ entry.changed_by }}
+            — {{ entry.changed_at.strftime("%Y-%m-%d %H:%M:%S") }}
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No status changes recorded yet.</p>
+{% endif %}
+
 {% endblock %}

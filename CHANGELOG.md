@@ -104,3 +104,17 @@ All changes will be documented here.
 - Protected all status update routes with role_required decorator
 - Added server-side validation to reject invalid status values
 - Status remains visible to regular users on request list and detail pages
+
+## Phase 9 - Status History & Audit Logs System
+
+### Completed
+- Created StatusHistory model to record all status changes
+- Added relationship between Request and StatusHistory
+- Audit log automatically created on every status update
+- Stored previous status, new status, changed by username, and timestamp
+- Added same-status check to prevent duplicate audit entries
+- Status history displayed on admin request detail page
+- Status history displayed on engineer request detail page
+- History entries ordered by most recent first
+- Regular users cannot access audit history
+- New database table created automatically on app startup

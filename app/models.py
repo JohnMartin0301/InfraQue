@@ -17,3 +17,11 @@ class Request(db.Model):
     status = db.Column(db.String(50), default="Pending")
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+class StatusHistory(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    request_id = db.Column(db.Integer, db.ForeignKey('request.id'), nullable=False)
+    old_status = db.Column(db.String(50), nullable=False)
+    new_status = db.Column(db.String(50), nullable=False)
+    changed_by = db.Column(db.String(80), nullable=False)
+    changed_at = db.Column(db.DateTime, default=datetime.utcnow)
