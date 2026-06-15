@@ -66,3 +66,15 @@ All changes will be documented here.
 - Created admin page template
 - Created engineer page template
 - Verified all three roles behave differently
+
+## Phase 6 - Role Management System
+
+### Completed
+- Created login_required decorator to protect routes from unauthenticated access
+- Created role_required decorator to restrict routes by user role
+- Applied login_required to all authenticated routes (dashboard, requests)
+- Applied role_required to admin and engineer routes
+- Removed repeated session checks from individual routes (replaced by decorators)
+- Admin page now displays all requests and all users in the system
+- Engineer page now displays all approved requests
+- Verified all three roles behave correctly with the new decorator system

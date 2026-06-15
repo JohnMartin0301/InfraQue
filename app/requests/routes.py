@@ -2,32 +2,26 @@ from flask import Blueprint, render_template, redirect, url_for, session, flash
 from ..extensions import db
 from ..models import Request
 from .forms import RequestForm
+from ..decorators import login_required
 
 requests_bp = Blueprint('requests', __name__)
 
 @requests_bp.route("/requests")
+@login_required
 def my_requests():
 
-    if not session.get("user_id"):
-        return redirect(url_for("auth.login"))
-    
     user_requests = Request.query.filter_by(user_id=session["user_id"]).all()
 
     return render_template("my_requests.html", requests=user_requests)
 
 @requests_bp.route("/requests/new", methods=["GET", "POST"])
+@login_required
 def create_request():
-
-    if not session.get("user_id"):
-        return redirect(url_for("auth.login"))
     
     form = RequestForm()
 
     if form.validate_on_submit():
-        title = form.title.data
-        description = form.description.data
-
-        new_request = Request(title=title, description=description, user_id=session["user_id"])
+        new_request = Request(title=form.title.data, description=form.description.data, user_id=session["user_id"])
 
         db.session.add(new_request)
         db.session.commit()
@@ -38,10 +32,8 @@ def create_request():
     return render_template("create_request.html", form=form)
 
 @requests_bp.route("/requests/<int:request_id>")
+@login_required
 def request_detail(request_id):
-
-    if not session.get("user_id"):
-        return redirect(url_for("auth.login"))
     
     req = Request.query.get_or_404(request_id)
 

@@ -9,14 +9,40 @@
 
 <hr>
 
-<h2>Admin Actions</h2>
+<h2>All Requests ({{ requests|length }})</h2>
 
-<ul>
-    <li>Manage users</li>
-    <li>Approve or reject requests</li>
-    <li>View all requests</li>
-</ul>
+{% if requests %}
+    <ul>
+    {% for r in requests %}
+        <li>
+            <strong>{{ r.title }}</strong>
+            — Status: {{ r.status }}
+            — Submitted by: {{ r.owner.username }}
+            — {{ r.created_at.strftime("%Y-%m-%d") }}
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No requests in the system yet.</p>
+{% endif %}
 
-<p><em>Full admin functionality will be available in a future phase.</em></p>
+<hr>
+
+<h2>All Users ({{ users|length }})</h2>
+
+{% if users %}
+    <ul>
+    {% for u in users %}
+        <li>
+            <strong>{{ u.username }}</strong>
+            — {{ u.email }}
+            — Role: {{ u.role }}
+            — Joined: {{ u.created_at.strftime("%Y-%m-%d") }}
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No users in the system yet.</p>
+{% endif %}
 
 {% endblock %}

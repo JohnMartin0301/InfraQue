@@ -9,14 +9,20 @@
 
 <hr>
 
-<h2>Engineer Actions</h2>
+<h2>Approved Requests ({{ requests|length }})</h2>
 
-<ul>
-    <li>View approved requests</li>
-    <li>Update request status to In Progress</li>
-    <li>Mark requests as Completed</li>
-</ul>
-
-<p><em>Full engineer functionality will be available in a future phase.</em></p>
+{% if requests %}
+    <ul>
+    {% for r in requests %}
+        <li>
+            <strong>{{ r.title }}</strong>
+            — Submitted by: {{ r.owner.username }}
+            — {{ r.created_at.strftime("%Y-%m-%d") }}
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No approved requests at this time.</p>
+{% endif %}
 
 {% endblock %}
