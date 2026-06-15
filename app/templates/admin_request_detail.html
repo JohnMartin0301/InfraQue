@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}All Requests{% endblock %}
+
+{% block content %}
+
+<h1>All Requests</h1>
+<p>Total: {{ requests|length }}</p>
+
+<p><a href="{{ url_for('admin.admin_dashboard') }}">← Back to Admin Dashboard</a></p>
+
+<hr>
+
+{% if requests %}
+    <ul>
+    {% for r in requests %}
+        <li>
+            <a href="{{ url_for('admin.admin_request_detail', request_id=r.id) }}">
+                {{ r.title }}
+            </a>
+            — Status: {{ r.status }}
+            — By: {{ r.owner.username }}
+            — {{ r.created_at.strftime("%Y-%m-%d") }}
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No requests in the system yet.</p>
+{% endif %}
+
+{% endblock %}

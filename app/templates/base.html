@@ -16,7 +16,7 @@
         <a href="{{ url_for('requests.my_requests') }}">My Requests</a>
 
         {% if session.get("role") == "Admin" %}
-            <a href="{{ url_for('admin.admin_home') }}">Admin</a>
+            <a href="{{ url_for('admin.admin_dashboard') }}">Admin</a>
         {% endif %}
 
         {% if session.get("role") == "Engineer" %}
@@ -37,7 +37,16 @@
 
 <hr>
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <p><strong>{{ message }}</strong></p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
 {% block content %}{% endblock %}
+
 
 </body>
 </html>
