@@ -78,3 +78,29 @@ All changes will be documented here.
 - Admin page now displays all requests and all users in the system
 - Engineer page now displays all approved requests
 - Verified all three roles behave correctly with the new decorator system
+
+## Phase 7 - Admin Panel System
+
+### Completed
+- Created dedicated Admin Dashboard route and template
+- Added system overview statistics (total users, total requests)
+- Added recent users and recent requests sections to admin dashboard
+- Created admin user list page showing all users with roles
+- Created admin request list page showing all requests from all users
+- Created admin request detail page
+- Protected all admin routes with role_required decorator
+- Updated navigation to link to new admin dashboard
+- Moved flash messages to base.html for consistent display across all pages
+
+## Phase 8 - Status Tracking Workflow System
+
+### Completed
+- Defined allowed statuses: Pending, In Progress, Approved, Rejected
+- Added status update route for Admin
+- Added status update route for Engineer
+- Added status dropdown form to admin request detail page
+- Created engineer request detail page with status dropdown form
+- Updated engineer page to link to individual request details
+- Protected all status update routes with role_required decorator
+- Added server-side validation to reject invalid status values
+- Status remains visible to regular users on request list and detail pages
