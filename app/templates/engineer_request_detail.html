@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}Request Detail — Admin{% endblock %}
+{% block title %}Request Detail — Engineer{% endblock %}
 
 {% block content %}
 
 <h1>Request Detail</h1>
 
-<p><a href="{{ url_for('admin.admin_requests') }}">← Back to All Requests</a></p>
+<p><a href="{{ url_for('admin.engineer_home') }}">← Back to Approved Requests</a></p>
 
 <hr>
 
@@ -20,7 +20,7 @@
 
 <h2>Update Status</h2>
 
-<form method="POST" action="{{ url_for('admin.update_request_status', request_id=request.id) }}">
+<form method="POST" action="{{ url_for('admin.engineer_update_status', request_id=request.id) }}">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
     <label for="status">New Status:</label>
