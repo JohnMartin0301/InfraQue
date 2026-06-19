@@ -129,5 +129,3 @@ This project was built using a phase-based development approach, simulating how 
 ## 📄 License
 
 Copyright (c) 2026 John Martin. All Rights Reserved.
-
-This is a personal project and is not open source. Copying, forking, cloning, or reusing any part of this code without explicit permission is not allowed.
