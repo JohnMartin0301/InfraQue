@@ -122,16 +122,6 @@ The change takes effect immediately. The person doesn't need to log out — thei
 
 A request can only move forward in a sensible order — it cannot jump straight from submitted to finished. Each role only sees the next step that actually applies to them, and once a request is marked finished or rejected, that decision is final. No request can quietly slip backward or skip a step, which keeps the history trustworthy.
 
-## What's intentionally left out of this version
-
-Scope was kept tight on purpose, so the core experience would be solid instead of stretched thin across too many features. Left for a future version:
-
-- Email notifications when something changes
-- File attachments on requests
-- A public API for other systems to connect to
-- A production-grade database — SQLite works great for development but isn't built for heavy concurrent traffic
-- Actual automated provisioning — approving a request tracks that the work needs doing, it doesn't spin up a real server automatically
-
 ## How this was built
 
 This project was built using a phase-based development approach, simulating how real software gets built in stages rather than all at once — starting with project setup and authentication, then layering in request handling, role permissions, an admin panel, status tracking, audit logging, and finally a full UI pass. Each phase was treated as its own milestone with its own testing and review before moving to the next.
