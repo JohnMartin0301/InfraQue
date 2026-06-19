@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}All Requests — InfraQue{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <div class="page-header-text">
+        <h1>All requests</h1>
+        <p>Read-only view across {{ requests|length }} request{{ "s" if requests|length != 1 else "" }}.</p>
+    </div>
+</div>
+
+<div class="card">
+    {% if requests %}
+    <div class="table-wrap">
+        <table class="data-table">
+            <thead><tr><th>Request</th><th>Type</th><th>Status</th><th>Submitted by</th><th>Created</th></tr></thead>
+            <tbody>
+                {% for r in requests %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('admin.viewer_request_detail', request_id=r.id) }}" class="cell-title">{{ r.title }}</a>
+                        <div class="req-id" style="margin-top:3px;">REQ-{{ "%04d"|format(r.id) }}</div>
+                    </td>
+                    <td class="cell-muted">{{ r.request_type }}</td>
+                    <td><span class="status-badge status-{{ r.status|lower|replace(' ', '-') }}">{{ r.status }}</span></td>
+                    <td class="cell-muted">{{ r.owner.username }}</td>
+                    <td class="cell-muted">{{ r.created_at.strftime("%Y-%m-%d") }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">No requests in the system yet.</div>
+    {% endif %}
+</div>
+
+{% endblock %}

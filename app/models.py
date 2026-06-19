@@ -13,10 +13,12 @@ class User(db.Model):
 class Request(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(150), nullable=False)
+    request_type = db.Column(db.String(100), nullable=False, default="Virtual Machine")
     description = db.Column(db.Text, nullable=False)
     status = db.Column(db.String(50), default="Pending")
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    history = db.relationship('StatusHistory', backref='request', lazy=True)
 
 class StatusHistory(db.Model):
     id = db.Column(db.Integer, primary_key=True)

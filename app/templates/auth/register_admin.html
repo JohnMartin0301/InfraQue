@@ -1,0 +1,50 @@
+{% extends "base_guest.html" %}
+
+{% block title %}Admin Setup — InfraQue{% endblock %}
+
+{% block content %}
+<div class="auth-shell">
+    <div class="auth-card">
+        <div class="auth-brand">
+            <span class="auth-brand-mark">InfraQue</span>
+        </div>
+        <div class="auth-brand-sub">Provisioning Portal</div>
+
+        <h1 class="auth-title">Administrator setup</h1>
+        <p class="auth-subtitle">This page is for authorized system administrators only and requires a registration code.</p>
+
+        <form method="POST" class="form-grid">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="field">
+                <label for="code">Registration code</label>
+                <input type="password" id="code" name="code" required>
+            </div>
+
+            <hr style="margin: 4px 0;">
+
+            <div class="field">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="field">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="field">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <div class="field">
+                <label for="confirm_password">Confirm password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create admin account</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

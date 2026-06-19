@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}{{ request.title }} — InfraQue{% endblock %}
+
+{% block content %}
+
+<div class="breadcrumb"><a href="{{ url_for('admin.admin_requests') }}">All requests</a> / REQ-{{ "%04d"|format(request.id) }}</div>
+
+<div class="page-header">
+    <div class="page-header-text">
+        <h1>{{ request.title }}</h1>
+        <p><span class="status-badge status-{{ request.status|lower|replace(' ', '-') }}">{{ request.status }}</span></p>
+    </div>
+</div>
+
+<div class="card" style="max-width: 620px;">
+    <dl class="detail-grid">
+        <dt>Request ID</dt>
+        <dd><span class="req-id">REQ-{{ "%04d"|format(request.id) }}</span></dd>
+
+        <dt>Type</dt>
+        <dd>{{ request.request_type }}</dd>
+
+        <dt>Description</dt>
+        <dd>{{ request.description }}</dd>
+
+        <dt>Submitted by</dt>
+        <dd>{{ request.owner.username }}</dd>
+
+        <dt>Created</dt>
+        <dd>{{ request.created_at.strftime("%Y-%m-%d %H:%M") }}</dd>
+    </dl>
+</div>
+
+<div style="max-width: 620px;">
+    {% with action_url=url_for('admin.update_request_status', request_id=request.id) %}
+        {% include "_status_update.html" %}
+    {% endwith %}
+</div>
+
+<div style="max-width: 620px;">
+    {% include "_timeline.html" %}
+</div>
+
+{% endblock %}

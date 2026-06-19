@@ -1,6 +1,6 @@
 from flask import Flask
 from .config import Config
-from .extensions import db, bcrypt
+from .extensions import db, bcrypt, csrf
 
 def create_app():
     app = Flask(__name__)
@@ -9,6 +9,7 @@ def create_app():
 
     db.init_app(app)
     bcrypt.init_app(app)
+    csrf.init_app(app)
 
     from app.main.routes import main_bp
     from app.auth.routes import auth_bp

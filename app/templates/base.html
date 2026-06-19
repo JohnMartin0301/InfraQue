@@ -1,52 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}InfraQue{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
-<nav>
-    {% if session.get("user_id") %}
+{% set role = session.get("role") %}
+<div class="app-shell">
 
-        <!-- ✅ LOGGED IN -->
-        <a href="{{ url_for('main.dashboard') }}">Dashboard</a>
+    <div class="sidebar-scrim" id="sidebarScrim"></div>
 
-        <a href="{{ url_for('requests.create_request') }}">Create Request</a>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <span class="sidebar-brand-mark">InfraQue</span>
+        </div>
+        <div class="sidebar-brand-sub" style="padding: 0 10px 14px 10px; margin-top: -8px;">Provisioning Portal</div>
 
-        <a href="{{ url_for('requests.my_requests') }}">My Requests</a>
+        <a class="sidebar-link {% if request.endpoint == 'main.dashboard' %}active{% endif %}" href="{{ url_for('main.dashboard') }}">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+            Dashboard
+        </a>
 
-        {% if session.get("role") == "Admin" %}
-            <a href="{{ url_for('admin.admin_dashboard') }}">Admin</a>
+        <div class="sidebar-section-label">Requests</div>
+
+        <a class="sidebar-link {% if request.endpoint == 'requests.create_request' %}active{% endif %}" href="{{ url_for('requests.create_request') }}">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>
+            New Request
+        </a>
+
+        <a class="sidebar-link {% if request.endpoint in ['requests.my_requests', 'requests.request_detail'] %}active{% endif %}" href="{{ url_for('requests.my_requests') }}">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3h6l1 4H8z"/><path d="M5 7h14l-1 14H6z"/><path d="M9 11h6M9 15h6"/></svg>
+            My Requests
+        </a>
+
+        {% if role in ['Admin', 'Manager', 'Engineer', 'Support', 'Viewer'] %}
+        <div class="sidebar-section-label">Operations</div>
         {% endif %}
 
-        {% if session.get("role") == "Engineer" %}
-            <a href="{{ url_for('admin.engineer_home') }}">Engineer</a>
+        {% if role == 'Manager' %}
+        <a class="sidebar-link {% if 'manager' in request.endpoint %}active{% endif %}" href="{{ url_for('admin.manager_home') }}">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            Approvals
+        </a>
         {% endif %}
 
-        <a href="{{ url_for('auth.logout') }}">Logout</a>
+        {% if role == 'Engineer' %}
+        <a class="sidebar-link {% if 'engineer' in request.endpoint %}active{% endif %}" href="{{ url_for('admin.engineer_home') }}">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            Engineer Queue
+        </a>
+        {% endif %}
 
-    {% else %}
+        {% if role == 'Support' %}
+        <a class="sidebar-link {% if 'support' in request.endpoint %}active{% endif %}" href="{{ url_for('admin.support_home') }}">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            Support Queue
+        </a>
+        {% endif %}
 
-        <!-- ❌ GUEST -->
-        <a href="{{ url_for('auth.login') }}">Login</a>
+        {% if role == 'Viewer' %}
+        <a class="sidebar-link {% if 'viewer' in request.endpoint %}active{% endif %}" href="{{ url_for('admin.viewer_home') }}">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            All Requests
+        </a>
+        {% endif %}
 
-        <a href="{{ url_for('auth.register') }}">Register</a>
+        {% if role == 'Admin' %}
+        <a class="sidebar-link {% if request.endpoint == 'admin.admin_dashboard' %}active{% endif %}" href="{{ url_for('admin.admin_dashboard') }}">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            Admin Overview
+        </a>
+        <a class="sidebar-link {% if request.endpoint == 'admin.admin_users' %}active{% endif %}" href="{{ url_for('admin.admin_users') }}">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Manage Users
+        </a>
+        <a class="sidebar-link {% if request.endpoint in ['admin.admin_requests', 'admin.admin_request_detail'] %}active{% endif %}" href="{{ url_for('admin.admin_requests') }}">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3h6l1 4H8z"/><path d="M5 7h14l-1 14H6z"/></svg>
+            All Requests
+        </a>
+        {% endif %}
 
-    {% endif %}
-</nav>
+        <div class="sidebar-footer">
+            <a class="sidebar-link {% if request.endpoint == 'main.profile' %}active{% endif %}" href="{{ url_for('main.profile') }}">
+                <div class="sidebar-user">
+                    <div class="sidebar-user-avatar">{{ session.get("username", "?")[0]|upper }}</div>
+                    <div class="sidebar-user-info">
+                        <div class="sidebar-user-name">{{ session.get("username") }}</div>
+                        <div class="sidebar-user-role">{{ role }}</div>
+                    </div>
+                </div>
+            </a>
+            <a class="sidebar-logout" href="{{ url_for('auth.logout') }}">Sign out</a>
+            <div class="sidebar-copyright">© 2026 John Martin</div>
+        </div>
+    </aside>
 
-<hr>
+    <div class="main-column">
+        <div class="mobile-topbar">
+            <span class="mobile-topbar-brand">InfraQue</span>
+            <button class="nav-toggle" id="navToggle" aria-label="Open navigation"><span class="nav-toggle-bar"></span></button>
+        </div>
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
-            <p><strong>{{ message }}</strong></p>
-        {% endfor %}
-    {% endif %}
-{% endwith %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="flash-stack">
+                {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
 
-{% block content %}{% endblock %}
+        <div class="page">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
 
+<script>
+    var toggle = document.getElementById('navToggle');
+    var sidebar = document.getElementById('sidebar');
+    var scrim = document.getElementById('sidebarScrim');
+    function closeNav() {
+        sidebar.classList.remove('is-open');
+        scrim.classList.remove('is-open');
+    }
+    if (toggle) {
+        toggle.addEventListener('click', function () {
+            sidebar.classList.toggle('is-open');
+            scrim.classList.toggle('is-open');
+        });
+    }
+    if (scrim) { scrim.addEventListener('click', closeNav); }
+</script>
 
 </body>
 </html>

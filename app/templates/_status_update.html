@@ -1,0 +1,17 @@
+{# Expects: request, allowed_next (list of strings), action_url #}
+<div class="card">
+    <div class="card-title">Update status</div>
+    {% if allowed_next %}
+    <form method="POST" action="{{ action_url }}" class="status-update-row">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <select name="status">
+            {% for status in allowed_next %}
+                <option value="{{ status }}">{{ status }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary btn-sm">Apply</button>
+    </form>
+    {% else %}
+    <p style="color: var(--color-text-muted); margin: 0;">No further actions available for this request.</p>
+    {% endif %}
+</div>

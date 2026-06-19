@@ -1,0 +1,23 @@
+{# Expects: history (list of StatusHistory entries) #}
+<div class="card">
+    <div class="card-title">Status history</div>
+    {% if history %}
+    <div class="timeline">
+        {% for entry in history %}
+        <div class="timeline-item">
+            <div class="timeline-dot-col"><div class="timeline-dot"></div></div>
+            <div class="timeline-body">
+                <div class="timeline-transition">
+                    <span class="status-badge status-{{ entry.old_status|lower|replace(' ', '-') }}">{{ entry.old_status }}</span>
+                    →
+                    <span class="status-badge status-{{ entry.new_status|lower|replace(' ', '-') }}">{{ entry.new_status }}</span>
+                </div>
+                <div class="timeline-meta">{{ entry.changed_by }} · {{ entry.changed_at.strftime("%Y-%m-%d %H:%M") }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">No status changes recorded yet.</div>
+    {% endif %}
+</div>

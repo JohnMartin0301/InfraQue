@@ -118,3 +118,36 @@ All changes will be documented here.
 - History entries ordered by most recent first
 - Regular users cannot access audit history
 - New database table created automatically on app startup
+
+## Phase 10 - Hardening and UI/UX Enhancement
+
+### Fixes
+- Added missing Completed status to ALLOWED_STATUSES and VALID_TRANSITIONS
+- Fixed home page to a real landing page instead of a placeholder string
+- Fixed dashboard to show all five status counts (Total, Pending, Approved, In Progress, Completed)
+- Fixed template structure — organized all templates into blueprint subfolders
+- Resolved route conflicts and import errors across auth and admin blueprints
+- Fixed CSRF token availability across all forms via global CSRFProtect initialization
+
+### Enhancements
+- Added request_type field with dropdown across creation, detail, and all role views
+- Added status transition validation per role (Manager, Engineer, Support, Admin)
+- Added Profile and Change Password pages
+- Added secure first-Admin registration via environment-set registration code
+- Added instant role propagation via database-synced session decorator (no logout required)
+- Added Manager, Support, and Viewer roles alongside existing User, Engineer, Admin
+- Added README.md and requirements.txt for setup and portfolio documentation
+- Moved SECRET_KEY and ADMIN_REGISTRATION_CODE to environment variables
+
+### User Interface & Experience
+- Implemented enterprise-inspired design system (dark sidebar shell, light content area)
+- Added consistent status badge component used across dashboard, tables, and detail pages
+- Added monospaced request ID convention (REQ-0042 format) across all request views
+- Restyled all tables with consistent headers, spacing, hover states, and horizontal scroll on small screens
+- Restyled all forms (login, register, create request, change password, status updates) with consistent fields and focus states
+- Added stat tile component with status-colored top bar for dashboard and admin overview
+- Added timeline component for status history shared across Admin, Manager, Engineer, and Support detail pages
+- Implemented fully responsive layout: collapsing sidebar drawer on tablet/mobile, reflowing stat grids, single-column detail views on small screens
+- Redesigned login, register, and admin-setup pages as centered cards on a dark background
+- Redesigned home page as a two-column landing view with a custom infrastructure provisioning topology diagram
+- Added centered footer with copyright notice to home page and sidebar on all logged-in pages
